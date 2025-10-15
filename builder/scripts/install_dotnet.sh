@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 trap "exit 128" INT
-set -e
-set -u
-set -x
+set -eux
 
 export LANG="C"
 export LC_ALL="C"
@@ -22,9 +20,9 @@ tmp="$(mktemp -d "${tmp_base}/build_gdmt_XXXX")"
 mkdir -p "${tmp}"
 cd "${tmp}"
 
-curl -f -o "dotnet-install.sh" "https://dot.net/v1/dotnet-install.sh"
+wget -q -O "dotnet-install.sh" "https://dot.net/v1/dotnet-install.sh"
 
-bash ./dotnet-install.sh --channel 9.0
+bash ./dotnet-install.sh --channel 9.0 > dotnet-install.log
 
 cd "${cwd}"
-rm -rf "${tmp}"
+rm -f -r "${tmp}"
