@@ -10,9 +10,6 @@ export LC_ALL="C"
 
 export TERM="dumb"
 
-export InvariantGlobalization="1"
-export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT="1"
-
 declare DOTNET_ROOT
 DOTNET_ROOT="$(dirname "$(command -v dotnet)")"
 export DOTNET_ROOT
