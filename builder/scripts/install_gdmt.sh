@@ -10,11 +10,8 @@ export LC_ALL="C"
 
 export TERM="dumb"
 
-export InvariantGlobalization="1"
-export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT="1"
-
 declare -r PN="gentoo-dotnet-maintainer-tools"
-declare -r PV="3.0.0"
+declare -r PV="3.0.1"
 declare -r P="${PN}-${PV}"
 declare -r A="${P}.tar"
 
@@ -34,9 +31,9 @@ wget -q -O "${A}" "https://gitlab.gentoo.org/dotnet/${PN}/-/archive/${PV}/${A}"
 tar xf "${A}"
 
 cd "${P}"
-cd ./Source/v3
+cd ./code/source/v3
 
-make build install > make.log
+make build install
 
 cd "${cwd}"
 rm -f -r "${tmp}"
