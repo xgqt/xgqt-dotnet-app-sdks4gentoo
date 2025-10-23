@@ -10,10 +10,11 @@ export LC_ALL="C"
 
 export TERM="dumb"
 
-declare -r PN="gentoo-dotnet-maintainer-tools"
-declare -r PV="3.0.1"
-declare -r P="${PN}-${PV}"
-declare -r A="${P}.tar"
+declare DOTNET_ROOT
+DOTNET_ROOT="$(dirname "$(command -v dotnet)")"
+export DOTNET_ROOT
+
+declare -r pwsh_version="${1}"
 
 declare cwd
 cwd="$(pwd)"
@@ -27,13 +28,11 @@ tmp="$(mktemp -d "${tmp_base}/build_gdmt_XXXX")"
 mkdir -p "${tmp}"
 cd "${tmp}"
 
-wget -q -O "${A}" "https://gitlab.gentoo.org/dotnet/${PN}/-/archive/${PV}/${A}"
-tar xf "${A}"
+gdmt genpwsh --compression="xz" --temp="${tmp}" \
+     --sdk-exe="/root/.dotnet/dotnet" --sdk-ver="9.0" "${pwsh_version}"
 
-cd "${P}"
-cd ./code/source/v3
-
-make build install
+cp "${tmp}/gdmt_genpwsh/pwsh-${pwsh_version}.tar.xz" \
+   "${cwd}/pwsh-${pwsh_version}.repackaged.tar.xz"
 
 cd "${cwd}"
 rm -f -r "${tmp}"
